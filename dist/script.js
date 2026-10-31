@@ -1,13 +1,15 @@
 // @ts-check
 "use strict";
 
-/** @typedef {{ observedAt: number, staleAfterMs: number, freshness: string, state: string, rpm: number, speed: number, distance: number, provenance: string, settlement: string, settlementAvailable: boolean }} WheelData */
+/** @typedef {{ observedAt: number, staleAfterMs: number, freshness: string, state: string, rpm: number, speed: number, distance: number, provenance: string }} WheelData */
+/** @typedef {{ observedAt: number, state: string }} SettlementData */
 /** @typedef {{ name: string, round: string | null, timestamp: number, transaction: string | null, block: string, log: string }} CoreEvent */
 /** @typedef {{ height: string, progress: string, unitsPerBlock: string, work: string, rate: string, round: string, indexedBlock: string, generatedAt: number | null, paused: boolean, events: CoreEvent[] }} CoreData */
 /** @typedef {{ generatedAt: number, indexTimestamp: number | null, supply: string, cap: string, decimals: number, mined: string, staked: string, paid: string, processedRound: string, stakingPaused: boolean, paused: boolean }} EconomyData */
 /** @typedef {{ supply: string, decimals: number, block: string, blockAt: number }} RpcData */
 /** @template T @typedef {{ data: T | null, raw: unknown, receivedAt: number, indexChangedAt: number, cached: boolean, error: string }} Reading */
 /** @typedef {"status" | "core" | "economy" | "rpc"} Source */
+/** @typedef {Source | "settlement"} ReadingName */
 
 const CONFIG = Object.freeze({
   api: "https://api.squeekchain.com/v1",
@@ -27,10 +29,12 @@ function emptyReading() {
   return { data: null, raw: null, receivedAt: 0, indexChangedAt: 0, cached: false, error: "" };
 }
 
-/** @type {{status: Reading<WheelData>, core: Reading<CoreData>, economy: Reading<EconomyData>, rpc: Reading<RpcData>}} */
-const readings = { status: emptyReading(), core: emptyReading(), economy: emptyReading(), rpc: emptyReading() };
+/** @type {{status: Reading<WheelData>, settlement: Reading<SettlementData>, core: Reading<CoreData>, economy: Reading<EconomyData>, rpc: Reading<RpcData>}} */
+const readings = { status: emptyReading(), settlement: emptyReading(), core: emptyReading(), economy: emptyReading(), rpc: emptyReading() };
 /** @type {Source[]} */
 const sources = ["status", "core", "economy", "rpc"];
+/** @type {ReadingName[]} */
+const cacheNames = [...sources, "settlement"];
 /** @type {{at: number, value: bigint}[]} */
 const samples = [];
 let refreshing = false;
@@ -106,7 +110,6 @@ function sepolia(chain) {
 function parseStatus(raw) {
   const payload = object(raw);
   const m = object(payload.measurement);
-  const q = object(payload.settlementQueue);
   const coreState = string(m.coreStatus, "Wheel state");
   if (coreState !== "RUNNING" && coreState !== "IDLE") throw new DataError("Unrecognized wheel state");
   return {
@@ -116,8 +119,19 @@ function parseStatus(raw) {
     state: coreState, rpm: number(m.rpmMilli, "cadence") / 1000,
     speed: number(m.speedMmPerSecond, "speed"), distance: number(m.distanceMm, "distance"),
     provenance: string(m.provenance, "Sensor provenance"),
-    settlement: typeof q.state === "string" ? q.state : "Not reported",
-    settlementAvailable: q.status === "available" && typeof q.state === "string",
+  };
+}
+/** @param {unknown} raw @returns {SettlementData} */
+function parseSettlement(raw) {
+  const payload = object(raw);
+  let q;
+  try { q = object(payload.settlementQueue); }
+  catch { throw new DataError("Settlement queue unavailable"); }
+  if (q.status !== "available" || typeof q.state !== "string" || !q.state.length) throw new DataError("Settlement queue unavailable");
+  return {
+    state: string(q.state, "Settlement state"),
+    // The status schema has no queue time; retain the successful response's observation time.
+    observedAt: optionalTimestamp(q.observedAt) ?? timestamp(object(payload.measurement).observedAt, "queue observation time"),
   };
 }
 /** @param {unknown} raw @returns {CoreData} */
@@ -253,12 +267,14 @@ function restoreCache() {
     const saved = localStorage.getItem(CONFIG.cacheKey);
     if (!saved || saved.length > 300000) return;
     const cache = object(JSON.parse(saved));
-    for (const name of sources) {
+    for (const name of cacheNames) {
       try {
-        const item = object(cache[name]);
+        // Migrate v1 caches that predate independently saved queue observations.
+        const item = object(name === "settlement" ? cache.settlement ?? cache.status : cache[name]);
         const time = number(item.receivedAt, "saved time");
         const indexed = typeof item.indexChangedAt === "number" ? item.indexChangedAt : time;
         if (name === "status") restore(readings.status, parseStatus, item.raw, time, indexed);
+        else if (name === "settlement") restore(readings.settlement, parseSettlement, item.raw, time, indexed);
         else if (name === "core") restore(readings.core, parseCore, item.raw, time, indexed);
         else if (name === "economy") restore(readings.economy, parseEconomy, item.raw, time, indexed);
         else restore(readings.rpc, parseRpc, item.raw, time, indexed);
@@ -268,7 +284,7 @@ function restoreCache() {
 }
 function saveCache() {
   try {
-    const cache = Object.fromEntries(sources.filter((name) => readings[name].data).map((name) => {
+    const cache = Object.fromEntries(cacheNames.filter((name) => readings[name].data).map((name) => {
       const entry = readings[name];
       return [name, { raw: entry.raw, receivedAt: entry.receivedAt, indexChangedAt: entry.indexChangedAt }];
     }));
@@ -276,7 +292,7 @@ function saveCache() {
   } catch { setText("storage-note", "Browser storage is unavailable. Readings are kept in memory until this page closes. No tracking, accounts or wallet connection."); }
 }
 
-/** @param {Source} name @returns {string} */
+/** @param {ReadingName} name @returns {string} */
 function staleReason(name) {
   const entry = readings[name];
   const now = Date.now();
@@ -285,6 +301,10 @@ function staleReason(name) {
   if (entry.error) return entry.error;
   if (entry.cached) return "Saved reading; awaiting reconnection";
   if (now - entry.receivedAt > CONFIG.staleMs) return paused ? "Automatic updates paused" : "No recent response";
+  if (name === "settlement" && readings.settlement.data) {
+    if (now - readings.settlement.data.observedAt > CONFIG.staleMs) return "Settlement queue observation is stale";
+    if (readings.settlement.data.observedAt > now + CONFIG.staleMs) return "Settlement queue timestamp is ahead of this browser";
+  }
   if (name === "status" && readings.status.data) {
     const data = readings.status.data;
     if (data.freshness !== "online") return `Sensor reports ${data.freshness}`;
@@ -309,9 +329,14 @@ function staleReason(name) {
   }
   return "";
 }
-/** @param {Source} name @returns {number} */
+/** @param {Source} name @returns {string} */
+function sourceProblem(name) {
+  return staleReason(name) || (name === "status" ? staleReason("settlement") : "");
+}
+/** @param {ReadingName} name @returns {number} */
 function readingTime(name) {
   if (name === "status" && readings.status.data) return readings.status.data.observedAt;
+  if (name === "settlement" && readings.settlement.data) return readings.settlement.data.observedAt;
   if (name === "economy" && readings.economy.data) return readings.economy.data.generatedAt;
   if (name === "core" && readings.core.data?.generatedAt) return readings.core.data.generatedAt;
   if (name === "rpc" && readings.rpc.data) return readings.rpc.data.blockAt;
@@ -338,27 +363,36 @@ function tokens(raw, decimals, places = 2) {
   const fraction = places ? "." + (rounded % precision).toString().padStart(places, "0") : "";
   return sign + integer(rounded / precision) + fraction;
 }
-/** @param {Source} name @param {string} id @param {string} verb */
+/** @param {ReadingName} name @param {string} id @param {string} verb */
 function stamp(name, id, verb) {
   const data = readings[name];
   const stale = staleReason(name);
   const message = data.data ? `${stale ? "Stale · " : ""}${verb} ${fullTime(readingTime(name))}${stale ? ` · ${stale}` : ""}` : `${data.error || "No successful reading yet"}. ${paused ? "Automatic updates paused." : "Retrying every 15 seconds."}`;
   setText(id, message);
   element(id).classList.toggle("is-stale", Boolean(stale));
-  setText(`source-${name}`, message);
+  if (name !== "settlement") setText(`source-${name}`, message);
 }
 
-/** @template T @param {Reading<T>} entry @param {() => Promise<unknown>} fetcher @param {(raw: unknown) => T} parse @param {Source} name */
+/** @template T @param {Reading<T>} entry @param {() => Promise<unknown>} fetcher @param {(raw: unknown) => T} parse @param {ReadingName} name */
 async function update(entry, fetcher, parse, name) {
   try {
     const raw = await fetcher();
     const data = parse(raw);
     // An older response must never displace a newer successful observation.
     if (name === "status" && readings.status.data && /** @type {WheelData} */ (data).observedAt < readings.status.data.observedAt) throw new DataError("Source returned an older wheel observation");
+    if (name === "settlement" && readings.settlement.data && /** @type {SettlementData} */ (data).observedAt < readings.settlement.data.observedAt) throw new DataError("Source returned an older settlement observation");
     if (name === "economy" && readings.economy.data && /** @type {EconomyData} */ (data).generatedAt < readings.economy.data.generatedAt) throw new DataError("Source returned an older economy snapshot");
     if (name === "core") {
       const core = /** @type {CoreData} */ (data);
-      if (!readings.core.data || core.indexedBlock !== readings.core.data.indexedBlock) entry.indexChangedAt = Date.now();
+      const previous = readings.core.data;
+      if (previous) {
+        if (BigInt(core.indexedBlock) < BigInt(previous.indexedBlock)) throw new DataError("Chain index moved backwards; rollback not reconciled");
+        if (core.generatedAt && previous.generatedAt && core.generatedAt < previous.generatedAt) throw new DataError("Source returned an older chain snapshot");
+        if (core.generatedAt && Date.now() - core.generatedAt > CONFIG.staleMs) throw new DataError("Chain response is stale");
+        if (core.generatedAt && core.generatedAt > Date.now() + CONFIG.staleMs) throw new DataError("Chain timestamp is ahead of this browser");
+        if (BigInt(core.height) < BigInt(previous.height) || BigInt(core.work) < BigInt(previous.work) || BigInt(core.round) < BigInt(previous.round)) throw new DataError("Chain counters moved backwards; rollback not reconciled");
+      }
+      if (!previous || BigInt(core.indexedBlock) > BigInt(previous.indexedBlock)) entry.indexChangedAt = Date.now();
     }
     entry.data = data; entry.raw = raw; entry.receivedAt = Date.now(); entry.cached = false; entry.error = "";
     if (name === "core" && !staleReason("core")) {
@@ -377,15 +411,17 @@ async function refresh() {
   refreshing = true;
   nextRefresh = Date.now() + CONFIG.pollMs;
   renderControls();
+  const statusRequest = request(`${CONFIG.api}/status`);
   await Promise.allSettled([
-    update(readings.status, () => request(`${CONFIG.api}/status`), parseStatus, "status"),
+    update(readings.status, () => statusRequest, parseStatus, "status"),
+    update(readings.settlement, () => statusRequest, parseSettlement, "settlement"),
     update(readings.core, () => request(`${CONFIG.api}/core`), parseCore, "core"),
     update(readings.economy, () => request(`${CONFIG.api}/economy/state`), parseEconomy, "economy"),
     update(readings.rpc, readSupply, parseRpc, "rpc"),
   ]);
   refreshing = false;
   render();
-  const failed = sources.filter((name) => staleReason(name));
+  const failed = sources.filter((name) => sourceProblem(name));
   const summary = failed.length ? `${failed.length} of 4 sources need attention. Last known readings are retained.` : "All four sources updated.";
   if (summary !== lastSummary || !paused) setText("announcement", summary);
   lastSummary = summary;
@@ -402,7 +438,7 @@ function renderControls() {
 }
 function render() {
   renderControls();
-  const unavailable = sources.filter((name) => readings[name].error || readings[name].cached || (readings[name].data && staleReason(name)));
+  const unavailable = sources.filter((name) => readings[name].error || readings[name].cached || (readings[name].data && sourceProblem(name)) || (name === "status" && (readings.settlement.error || readings.settlement.cached)));
   const note = element("connection-note");
   note.hidden = unavailable.length === 0 && navigator.onLine;
   if (!note.hidden) setText("connection-note", !navigator.onLine ? "You’re offline. Last known readings stay visible; refresh when your connection returns." : `${unavailable.length} of 4 sources are stale or unavailable. Last known values and timestamps are shown below.`);
@@ -416,8 +452,6 @@ function render() {
     const km = wheel.distance >= 1000000;
     setText("distance", decimal(wheel.distance / (km ? 1000000 : 1000))); setText("distance-unit", km ? "km" : "m");
     badge("wheel-freshness", stale ? "Stale reading" : "Live reading", stale ? "warning" : "good");
-    setText("settlement-state", `${stale || !wheel.settlementAvailable ? "Stale · " : ""}${wheel.settlementAvailable ? humanize(wheel.settlement) : "Unavailable"}`);
-    element("settlement-state").classList.toggle("is-stale", stale || !wheel.settlementAvailable);
   } else if (readings.status.error) {
     badge("wheel-freshness", "Unavailable", "warning");
     setText("hamster-state", "UNKNOWN"); setText("wheel-description", "No wheel reading yet. Retrying.");
@@ -436,8 +470,13 @@ function render() {
   stamp("status", "status-stamp", "Observed"); stamp("core", "core-stamp", "Chain checked");
   stamp("core", "events-stamp", "Events fetched"); stamp("economy", "economy-stamp", "API generated"); stamp("rpc", "rpc-stamp", "Sepolia block time");
   stamp("core", "work-stamp", "Work checked");
-  stamp("status", "settlement-stamp", "Queue observed");
-  element("settlement-stamp").hidden = !staleReason("status") && Boolean(wheel?.settlementAvailable);
+  const queue = readings.settlement.data;
+  const queueStale = staleReason("settlement");
+  setText("settlement-state", queue ? `${queueStale ? "Stale · " : ""}${humanize(queue.state)}` : readings.settlement.error ? "Unavailable" : "Not received");
+  element("settlement-state").classList.toggle("is-stale", Boolean(queueStale));
+  stamp("settlement", "settlement-stamp", "Queue observed");
+  element("settlement-stamp").hidden = !queueStale;
+  if (queueStale) setText("source-status", `${element("status-stamp").textContent} · ${element("settlement-stamp").textContent}`);
   renderSupply(); renderEvents();
 }
 /** @param {string} value @returns {string} */
@@ -509,35 +548,72 @@ function renderEvents() {
   const key = core ? JSON.stringify(core.events) : readings.core.error ? "error" : "loading";
   if (key === renderedEventKey && showAllEvents === renderedExpanded) return;
   renderedEventKey = key; renderedExpanded = showAllEvents;
-  const body = element("event-rows"); body.replaceChildren();
+  const body = element("event-rows");
+  const focused = document.activeElement instanceof HTMLElement && body.contains(document.activeElement) ? document.activeElement : null;
   if (!core || !core.events.length) {
     const row = document.createElement("tr"); const cell = document.createElement("td"); cell.colSpan = 4; cell.className = "empty-state";
     cell.textContent = core ? "No core events have been reported. This table updates automatically." : readings.core.error ? "Core events are unavailable. Retrying automatically; use Refresh now to try again." : "Connecting to the core API. New readings arrive every 15 seconds.";
-    row.append(cell); body.append(row); element("events-toggle").hidden = true;
-    setText("event-count", core ? "0 events" : "Waiting for events"); return;
+    row.append(cell); body.replaceChildren(row); element("events-toggle").hidden = true;
+    setText("event-count", core ? "0 events" : "Waiting for events");
+    if (focused) focusEventFallback();
+    return;
   }
+  const rows = new Map(Array.from(body.children).filter((row) => row instanceof HTMLElement && row.dataset.eventKey).map((row) => [/** @type {HTMLElement} */ (row).dataset.eventKey, /** @type {HTMLTableRowElement} */ (row)]));
   const events = core.events.slice(0, showAllEvents ? 25 : 6);
-  for (const event of events) {
-    const row = document.createElement("tr");
-    const name = document.createElement("td");
-    const label = document.createElement("span"); label.className = "event-name"; label.textContent = event.name;
-    const dot = document.createElement("span"); dot.className = "event-type-dot"; dot.setAttribute("aria-hidden", "true"); name.append(dot, label);
-    const mobileTime = document.createElement("time"); mobileTime.className = "mobile-event-time"; mobileTime.dateTime = new Date(event.timestamp).toISOString(); mobileTime.textContent = fullTime(event.timestamp).slice(5, 19); mobileTime.title = fullTime(event.timestamp); name.append(mobileTime);
-    const round = document.createElement("td"); round.textContent = event.round === null ? "Not reported" : integer(event.round);
-    const timeCell = document.createElement("td"); timeCell.className = "event-time-column";
-    const time = document.createElement("time"); time.dateTime = new Date(event.timestamp).toISOString(); time.textContent = fullTime(event.timestamp).slice(5, 19); time.title = fullTime(event.timestamp); timeCell.append(time);
-    const transaction = document.createElement("td");
+  // A new event can push the selected row past the compact six-row window.
+  // Keep that one extra row while it is focused and still present in the response.
+  const focusedKey = focused?.closest("tr")?.dataset.eventKey;
+  const focusedEvent = focusedKey ? core.events.find((event) => eventIdentity(event) === focusedKey) : null;
+  if (focusedEvent && !events.includes(focusedEvent)) events.push(focusedEvent);
+  const retained = new Set();
+  for (const [index, event] of events.entries()) {
+    const identity = eventIdentity(event);
+    const row = rows.get(identity) || document.createElement("tr");
+    row.dataset.eventKey = identity;
+    retained.add(row);
+    if (!row.cells.length) {
+      const name = row.insertCell();
+      const dot = document.createElement("span"); dot.className = "event-type-dot"; dot.setAttribute("aria-hidden", "true");
+      const label = document.createElement("span"); label.className = "event-name";
+      const mobileTime = document.createElement("time"); mobileTime.className = "mobile-event-time";
+      name.append(dot, label, mobileTime); row.insertCell();
+      const timeCell = row.insertCell(); timeCell.className = "event-time-column"; timeCell.append(document.createElement("time")); row.insertCell();
+    }
+    const label = /** @type {HTMLElement} */ (row.querySelector(".event-name"));
+    if (label.textContent !== event.name) label.textContent = event.name;
+    const round = event.round === null ? "Not reported" : integer(event.round);
+    if (row.cells[1].textContent !== round) row.cells[1].textContent = round;
+    for (const time of Array.from(row.querySelectorAll("time"))) {
+      time.dateTime = new Date(event.timestamp).toISOString(); time.textContent = fullTime(event.timestamp).slice(5, 19); time.title = fullTime(event.timestamp);
+    }
+    const transaction = row.cells[3];
     if (event.transaction) {
-      const link = document.createElement("a"); link.className = "event-link"; link.href = `https://sepolia.etherscan.io/tx/${event.transaction}`;
+      const link = transaction.querySelector("a") || document.createElement("a"); link.className = "event-link"; link.href = `https://sepolia.etherscan.io/tx/${event.transaction}`;
       link.target = "_blank"; link.rel = "noopener noreferrer"; link.textContent = "View tx ↗"; link.title = event.transaction;
-      link.setAttribute("aria-label", `View tx for ${event.name}, round ${event.round || "not reported"}, ${event.transaction} on Sepolia (opens in a new tab)`); transaction.append(link);
+      link.setAttribute("aria-label", `View tx for ${event.name}, round ${event.round || "not reported"}, ${event.transaction} on Sepolia (opens in a new tab)`);
+      if (link.parentElement !== transaction) transaction.replaceChildren(link);
     } else transaction.textContent = "Not reported";
-    row.append(name, round, timeCell, transaction); body.append(row);
+    // Prepending new rows leaves retained links attached, including the focused one.
+    if (body.children[index] !== row) body.insertBefore(row, body.children[index] || null);
   }
+  for (const row of Array.from(body.children)) if (!retained.has(row)) row.remove();
   setText("event-count", `${events.length} of ${core.events.length} events`);
   element("events-toggle").hidden = core.events.length <= 6;
   setText("events-toggle", showAllEvents ? "Show fewer events" : `Show all ${core.events.length} events`);
   element("events-toggle").setAttribute("aria-expanded", String(showAllEvents));
+  if (focused && document.activeElement !== focused) {
+    if (focused.isConnected) focused.focus({ preventScroll: true });
+    else focusEventFallback();
+  }
+}
+/** @param {CoreEvent} event @returns {string} */
+function eventIdentity(event) { return `${event.transaction?.toLowerCase() || event.block}:${event.log}`; }
+function focusEventFallback() {
+  const link = /** @type {HTMLElement | null} */ (element("event-rows").querySelector("a"));
+  if (link) link.focus({ preventScroll: true });
+  else {
+    const heading = element("events-heading"); heading.tabIndex = -1; heading.focus({ preventScroll: true });
+  }
 }
 
 element("refresh-button").addEventListener("click", () => { setText("announcement", "Checking all four data sources."); void refresh(); });

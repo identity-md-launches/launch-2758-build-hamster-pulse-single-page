@@ -1,5 +1,7 @@
 # Hamster Pulse validation
 
+This is the initial implementation record. The reopened findings, their reproductions and the final revision checks are documented in [revision-validation.md](revision-validation.md), which supersedes the affected freshness and changed-event focus claims below.
+
 Status: **Complete for the stated scope.** These are worker-run checks and observations, not an independent certification. Checked on 2026-10-31 against the exported `dist/` files.
 
 | Area | Actual result |

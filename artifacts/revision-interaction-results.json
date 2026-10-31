@@ -1,0 +1,172 @@
+[
+  {
+    "engine": "chromium",
+    "name": "first screen, exact supply, actual schema and zero values",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "15 second automatic poll and stable event focus",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "refresh changes running telemetry and extends real session chart",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "one base unit mismatch survives display rounding",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "event expansion and safe explorer links",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "each unavailable source retains values with stale timestamps",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "browser offline signal immediately marks cached readings stale",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "successful but stale payloads are explicitly stale",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "RPC malformed data and wrong network cannot falsely verify",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "pause stops requests, manual refresh works, resume restarts polling",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "empty events and untrusted event text",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "cached reload during complete outage keeps all readings",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "mobile, tablet, desktop and both system themes reflow",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "keyboard controls and sources disclosure",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "no script errors or missing local runtime files",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "first visit with all sources down is honest and recoverable",
+    "passed": true
+  },
+  {
+    "engine": "chromium",
+    "name": "disabled browser storage does not prevent live readings",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "first screen, exact supply, actual schema and zero values",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "15 second automatic poll and stable event focus",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "refresh changes running telemetry and extends real session chart",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "one base unit mismatch survives display rounding",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "event expansion and safe explorer links",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "each unavailable source retains values with stale timestamps",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "browser offline signal immediately marks cached readings stale",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "successful but stale payloads are explicitly stale",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "RPC malformed data and wrong network cannot falsely verify",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "pause stops requests, manual refresh works, resume restarts polling",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "empty events and untrusted event text",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "cached reload during complete outage keeps all readings",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "mobile, tablet, desktop and both system themes reflow",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "keyboard controls and sources disclosure",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "no script errors or missing local runtime files",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "first visit with all sources down is honest and recoverable",
+    "passed": true
+  },
+  {
+    "engine": "webkit",
+    "name": "disabled browser storage does not prevent live readings",
+    "passed": true
+  }
+]

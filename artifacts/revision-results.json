@@ -1,0 +1,518 @@
+[
+  {
+    "engine": "chromium",
+    "name": "older core index without generatedAt",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 04:00:00 UTC · Chain index moved backwards; rollback not reconciled",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "HTTP 200 core generated two minutes ago",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 04:00:00 UTC · Chain response is stale",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "partial settlement outage and cached reload",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:15 UTC",
+      "settled-round": "655",
+      "chart-description": "2 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:15 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Stale · Submitted",
+      "settlement-stamp": "Stale · Queue observed 2026-10-31 03:59:59 UTC · Settlement queue unavailable",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "incoming events preserve focused transaction and Enter",
+    "passed": true,
+    "after": {
+      "tag": "A",
+      "sameNode": true,
+      "connected": true,
+      "href": "https://sepolia.etherscan.io/tx/0x2b2ae4b7ea3772dbc41b1cbbfef98cc3bcda634c4507dc3f90381107b088936e"
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "older generatedAt within freshness and future timestamps are rejected",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 03:59:59 UTC",
+      "settled-round": "655",
+      "chart-description": "2 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 03:59:59 UTC · Source returned an older chain snapshot",
+      "settled-round": "655",
+      "chart-description": "2 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "lower core counters require reconciliation even at a newer index",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 04:00:00 UTC · Chain counters moved backwards; rollback not reconciled",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "queue and wheel fail independently, including missing queue objects",
+    "passed": true,
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:30 UTC",
+      "settled-round": "655",
+      "chart-description": "3 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:30 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Stale · Confirmed",
+      "settlement-stamp": "Stale · Queue observed 2026-10-31 04:00:14 UTC · Settlement queue unavailable",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:29 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "unavailable queue on first visit stays unknown",
+    "passed": true,
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Unavailable",
+      "settlement-stamp": "Settlement queue unavailable. Retrying every 15 seconds.",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "previous v1 cache migrates its successful queue observation",
+    "passed": true,
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Stale · Submitted",
+      "settlement-stamp": "Stale · Queue observed 2026-10-31 03:59:59 UTC · Settlement queue unavailable",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "chromium",
+    "name": "changed event metadata and ordering retain the same link node",
+    "passed": true,
+    "retainedHref": "https://sepolia.etherscan.io/tx/0x2b2ae4b7ea3772dbc41b1cbbfef98cc3bcda634c4507dc3f90381107b088936e"
+  },
+  {
+    "engine": "chromium",
+    "name": "removed or empty events move focus deliberately",
+    "passed": true,
+    "activeElement": "events-heading"
+  },
+  {
+    "engine": "chromium",
+    "name": "focused event remains usable beyond the compact six-row window",
+    "passed": true,
+    "retainedHref": "https://sepolia.etherscan.io/tx/0xac589cc3240a516d26b8c9a370b0b877e4acf829069bdc0facf1b8a078853424",
+    "visibleEvents": 7
+  },
+  {
+    "engine": "chromium",
+    "name": "unrelated keyboard focus is not moved by incoming events",
+    "passed": true,
+    "activeElement": "events-toggle"
+  },
+  {
+    "engine": "webkit",
+    "name": "older core index without generatedAt",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 04:00:00 UTC · Chain index moved backwards; rollback not reconciled",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "HTTP 200 core generated two minutes ago",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 04:00:00 UTC · Chain response is stale",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "partial settlement outage and cached reload",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:15 UTC",
+      "settled-round": "655",
+      "chart-description": "2 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:15 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Stale · Submitted",
+      "settlement-stamp": "Stale · Queue observed 2026-10-31 03:59:59 UTC · Settlement queue unavailable",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "incoming events preserve focused transaction and Enter",
+    "passed": true,
+    "after": {
+      "tag": "A",
+      "sameNode": true,
+      "connected": true,
+      "href": "https://sepolia.etherscan.io/tx/0x2b2ae4b7ea3772dbc41b1cbbfef98cc3bcda634c4507dc3f90381107b088936e"
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "older generatedAt within freshness and future timestamps are rejected",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 03:59:59 UTC",
+      "settled-round": "655",
+      "chart-description": "2 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 03:59:59 UTC · Source returned an older chain snapshot",
+      "settled-round": "655",
+      "chart-description": "2 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "lower core counters require reconciliation even at a newer index",
+    "passed": true,
+    "before": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 03:59:59 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    },
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Stale reading",
+      "core-stamp": "Stale · Chain checked 2026-10-31 04:00:00 UTC · Chain counters moved backwards; rollback not reconciled",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Submitted",
+      "settlement-stamp": "Queue observed 2026-10-31 04:00:14 UTC",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:14 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "queue and wheel fail independently, including missing queue objects",
+    "passed": true,
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:30 UTC",
+      "settled-round": "655",
+      "chart-description": "3 samples. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:30 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Stale · Confirmed",
+      "settlement-stamp": "Stale · Queue observed 2026-10-31 04:00:14 UTC · Settlement queue unavailable",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 04:00:29 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "unavailable queue on first visit stays unknown",
+    "passed": true,
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Unavailable",
+      "settlement-stamp": "Settlement queue unavailable. Retrying every 15 seconds.",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "previous v1 cache migrates its successful queue observation",
+    "passed": true,
+    "after": {
+      "block-height": "5,000",
+      "cumulative-work": "60,000",
+      "core-freshness": "Confirmed",
+      "core-stamp": "Chain checked 2026-10-31 04:00:00 UTC",
+      "settled-round": "655",
+      "chart-description": "1 sample. From 60,000 work units at 2026-10-31 04:00:00 UTC to 60,000 at 2026-10-31 04:00:00 UTC. Session change 0 work units.",
+      "work-gain": "+0 this session",
+      "settlement-state": "Stale · Submitted",
+      "settlement-stamp": "Stale · Queue observed 2026-10-31 03:59:59 UTC · Settlement queue unavailable",
+      "wheel-freshness": "Live reading",
+      "status-stamp": "Observed 2026-10-31 03:59:59 UTC",
+      "connection-note": "1 of 4 sources are stale or unavailable. Last known values and timestamps are shown below."
+    }
+  },
+  {
+    "engine": "webkit",
+    "name": "changed event metadata and ordering retain the same link node",
+    "passed": true,
+    "retainedHref": "https://sepolia.etherscan.io/tx/0x2b2ae4b7ea3772dbc41b1cbbfef98cc3bcda634c4507dc3f90381107b088936e"
+  },
+  {
+    "engine": "webkit",
+    "name": "removed or empty events move focus deliberately",
+    "passed": true,
+    "activeElement": "events-heading"
+  },
+  {
+    "engine": "webkit",
+    "name": "focused event remains usable beyond the compact six-row window",
+    "passed": true,
+    "retainedHref": "https://sepolia.etherscan.io/tx/0xac589cc3240a516d26b8c9a370b0b877e4acf829069bdc0facf1b8a078853424",
+    "visibleEvents": 7
+  },
+  {
+    "engine": "webkit",
+    "name": "unrelated keyboard focus is not moved by incoming events",
+    "passed": true,
+    "activeElement": "events-toggle"
+  }
+]

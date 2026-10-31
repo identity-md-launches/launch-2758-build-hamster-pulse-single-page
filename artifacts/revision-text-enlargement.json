@@ -1,0 +1,44 @@
+[
+  {
+    "version": "accepted",
+    "width": 390,
+    "scrollWidth": 420,
+    "offenders": [
+      {
+        "tag": "A",
+        "id": "",
+        "className": "network-link",
+        "right": 411.640625,
+        "text": "Sepolia testnet ↗"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "className": "",
+        "right": 411.640625,
+        "text": " ↗"
+      }
+    ]
+  },
+  {
+    "version": "revision",
+    "width": 390,
+    "scrollWidth": 420,
+    "offenders": [
+      {
+        "tag": "A",
+        "id": "",
+        "className": "network-link",
+        "right": 411.640625,
+        "text": "Sepolia testnet ↗"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "className": "",
+        "right": 411.640625,
+        "text": " ↗"
+      }
+    ]
+  }
+]

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-for (const file of ["script.js", "scripts/build.mjs", "scripts/preview.mjs", "scripts/check.mjs", "tests/validate.mjs", "tests/live-check.mjs"]) {
+for (const file of ["script.js", "scripts/build.mjs", "scripts/preview.mjs", "scripts/check.mjs", "tests/validate.mjs", "tests/live-check.mjs", "tests/revision.mjs"]) {
   const check = spawnSync(process.execPath, ["--check", resolve(root, file)], { encoding: "utf8" });
   assert.equal(check.status, 0, `${file}: ${check.stderr}`);
 }
@@ -29,7 +29,7 @@ assert.equal(png.readUInt32BE(20), 630, "Share image height");
 const lock = JSON.parse(await readFile(resolve(root, "package-lock.json"), "utf8"));
 assert.deepEqual(Object.keys(lock.packages), [""], "The project has no package dependencies");
 // Explicit delivery budget: all source/config/docs plus the four delivered directories.
-const paths = [".gitignore", "index.html", "style.css", "script.js", "favicon.svg", "social-card.png", "social-card.svg", "package.json", "package-lock.json", "jsconfig.json", "README.md", "DESIGN.md", "scripts", "tests", "dist", "artifacts"];
+const paths = [".gitignore", ".imd-responses.json", "index.html", "style.css", "script.js", "favicon.svg", "social-card.png", "social-card.svg", "package.json", "package-lock.json", "jsconfig.json", "README.md", "DESIGN.md", "scripts", "tests", "dist", "artifacts"];
 async function deliverySize(path) {
   const file = resolve(root, path);
   const info = await stat(file);
