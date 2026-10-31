@@ -1,0 +1,11 @@
+# Path budget: include the required export and evidence; exclude only generated
+# dependency/cache directories, browser scratch output and test/scratch/.
+!dist/
+!dist/**
+!artifacts/
+!artifacts/**
+**/node_modules/
+**/.npm/
+**/.cache/
+**/.playwright-mcp/
+test/scratch/

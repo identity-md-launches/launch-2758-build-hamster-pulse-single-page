@@ -1,0 +1,262 @@
+{
+  "views": [
+    {
+      "theme": "light",
+      "width": 320,
+      "scrollWidth": 320,
+      "viewport": 320,
+      "heroBottom": 649.09375,
+      "actionBottom": 241.59375
+    },
+    {
+      "theme": "light",
+      "width": 360,
+      "scrollWidth": 360,
+      "viewport": 360,
+      "heroBottom": 629.59375,
+      "actionBottom": 222.09375
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "scrollWidth": 390,
+      "viewport": 390,
+      "heroBottom": 629.59375,
+      "actionBottom": 222.09375
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "scrollWidth": 768,
+      "viewport": 768,
+      "heroBottom": 588.78125,
+      "actionBottom": 222.09375
+    },
+    {
+      "theme": "light",
+      "width": 1040,
+      "scrollWidth": 1040,
+      "viewport": 1040,
+      "heroBottom": 618,
+      "actionBottom": 174.5
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "viewport": 1440,
+      "heroBottom": 634,
+      "actionBottom": 174.5
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "scrollWidth": 320,
+      "viewport": 320,
+      "heroBottom": 649.09375,
+      "actionBottom": 241.59375
+    },
+    {
+      "theme": "dark",
+      "width": 360,
+      "scrollWidth": 360,
+      "viewport": 360,
+      "heroBottom": 629.59375,
+      "actionBottom": 222.09375
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "scrollWidth": 390,
+      "viewport": 390,
+      "heroBottom": 629.59375,
+      "actionBottom": 222.09375
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "scrollWidth": 768,
+      "viewport": 768,
+      "heroBottom": 588.78125,
+      "actionBottom": 222.09375
+    },
+    {
+      "theme": "dark",
+      "width": 1040,
+      "scrollWidth": 1040,
+      "viewport": 1040,
+      "heroBottom": 618,
+      "actionBottom": 174.5
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "viewport": 1440,
+      "heroBottom": 634,
+      "actionBottom": 174.5
+    }
+  ],
+  "audits": [
+    {
+      "theme": "light",
+      "violations": [],
+      "passes": 29
+    },
+    {
+      "theme": "dark",
+      "violations": [],
+      "passes": 29
+    }
+  ],
+  "contrast": {
+    "light": {
+      "page": 13.36,
+      "mutedOnPage": 5.33,
+      "mutedOnWheel": 5.21,
+      "mutedOnSurface": 5.77,
+      "primaryAction": 5.43,
+      "liveBadge": 6.16,
+      "focusOnPage": 5.54,
+      "focusOnSurface": 5.99,
+      "focusOnWheel": 5.41
+    },
+    "dark": {
+      "page": 15.12,
+      "mutedOnPage": 8.19,
+      "mutedOnWheel": 6.85,
+      "mutedOnSurface": 7.33,
+      "primaryAction": 6.69,
+      "liveBadge": 7.29,
+      "focusOnPage": 9.74,
+      "focusOnSurface": 8.72,
+      "focusOnWheel": 8.14
+    }
+  },
+  "errors": [],
+  "badLocal": [],
+  "network": [
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/economy/state",
+      "status": 200
+    },
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/status",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/core",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/core",
+      "status": 200
+    },
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/status",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/economy/state",
+      "status": 200
+    },
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/status",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/core",
+      "status": 200
+    },
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/economy/state",
+      "status": 200
+    },
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/core",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/economy/state",
+      "status": 200
+    },
+    {
+      "host": "api.squeekchain.com",
+      "path": "/v1/status",
+      "status": 200
+    },
+    {
+      "host": "ethereum-sepolia-rpc.publicnode.com",
+      "path": "/",
+      "status": 200
+    }
+  ],
+  "liveState": {
+    "hamster-state": "IDLE",
+    "rpm": "0",
+    "speed": "0",
+    "distance": "8.99",
+    "block-height": "4,973",
+    "block-percent": "5.3%",
+    "cumulative-work": "55,902",
+    "published-supply": "19,790,299.56",
+    "chain-supply": "19,790,299.56",
+    "published-exact": "19790299556933607814226919",
+    "chain-exact": "19790299556933607814226919",
+    "token-decimals": "18 on-chain / 18 published",
+    "rpc-block": "12,031,048",
+    "supply-badge": "Match",
+    "status-stamp": "Observed 2026-10-31 03:08:11 UTC",
+    "core-stamp": "Chain checked 2026-10-31 03:08:20 UTC",
+    "economy-stamp": "API generated 2026-10-31 03:08:18 UTC",
+    "rpc-stamp": "Sepolia block time 2026-10-31 03:08:12 UTC"
+  },
+  "textEnlargementOverflow": false,
+  "rtlOverflow": false
+}

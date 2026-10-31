@@ -1,0 +1,13 @@
+{
+  "name": "hamster-pulse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dependency-free live Squeekchain dashboard",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "check": "node scripts/check.mjs",
+    "typecheck": "npm exec --yes --package=typescript@5.9.3 -- tsc --project jsconfig.json"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f6f2"/>
+  <rect x="38" y="38" width="1124" height="554" rx="28" fill="#fbf2e8" stroke="#deded5" stroke-width="2"/>
+  <g fill="none" stroke="#b84322" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="103" cy="105" r="27"/><path d="M80 111h12l5-16 10 25 6-15h13"/></g>
+  <g font-family="Arial, sans-serif" fill="#262b24">
+    <text x="150" y="116" font-size="32" font-weight="700">Hamster Pulse</text>
+    <text x="78" y="245" font-size="68" font-weight="700" letter-spacing="-2">Small paws.</text>
+    <text x="78" y="322" font-size="68" font-weight="700" letter-spacing="-2">Real work.</text>
+    <text x="80" y="391" font-size="26" fill="#64675d">A live window into Squeekchain.</text>
+    <text x="80" y="500" font-size="21" fill="#64675d">Wheel telemetry · Chain progress · SQK supply</text>
+    <text x="80" y="539" font-size="18" fill="#64675d">Hamster-powered proof of work on Sepolia</text>
+  </g>
+  <g transform="translate(701 151) scale(1.6)" fill="none">
+    <path d="M54 221h112m-90-23-6 23m74-23 6 23" stroke="#684931" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="110" cy="107" r="92" stroke="#c8693d" stroke-width="6"/>
+    <circle cx="110" cy="107" r="78" stroke="#e3c6a9" stroke-width="1.5"/>
+    <path d="M110 29v156M32 107h156M55 52l110 110M55 162 165 52" stroke="#e3c6a9" stroke-width="1.5"/>
+    <path d="M48 162c-12-16-6-41 15-50 12-5 25-3 36 6l18-1c10 0 20 8 22 17l7 4c3 2 1 6-2 8l-11 6c-3 14-15 22-33 22H68c-9 0-15-4-20-12Z" fill="#d1a278" stroke="#684931" stroke-width="2.5"/>
+    <path d="M93 118c-6-5-8-14-3-19 6-5 15 0 15 9l-1 11" fill="#d1a278" stroke="#684931" stroke-width="2.5"/>
+    <path d="M57 160c-4-10 1-23 10-27 11-5 23 2 23 14 0 7-1 11-4 16" fill="#f6e3ce" stroke="#684931" stroke-width="2"/>
+    <path d="M46 157c-12 0-17-8-14-16m40 34-2 5h13m29-9 1 5h12" stroke="#684931" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="122" cy="131" r="3" fill="#684931"/>
+    <circle cx="118" cy="141" r="5" fill="#d38166"/>
+  </g>
+</svg>

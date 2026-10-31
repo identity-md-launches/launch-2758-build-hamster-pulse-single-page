@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#191b19" media="(prefers-color-scheme: dark)">
+  <title>Hamster Pulse — Squeekchain, live</title>
+  <meta name="description" content="Follow the wheel powering Squeekchain. Live hamster telemetry, chain progress, SQK supply verification and recent Sepolia events.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hamster Pulse — Squeekchain, live">
+  <meta property="og:description" content="One little wheel. An entire proof-of-work chain. Follow Squeekchain’s live pulse on Sepolia.">
+  <meta property="og:image" content="./social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hamster Pulse: live wheel telemetry, chain progress and verified SQK supply.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#dashboard">Skip to dashboard</a>
+  <header class="site-header shell">
+    <a class="brand" href="./" aria-label="Hamster Pulse home">
+      <svg class="brand-mark" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M5 21h7l3-9 6 15 3-8h7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Hamster Pulse<span class="brand-note">A small window into Squeekchain</span></span>
+    </a>
+    <a class="network-link" href="https://sepolia.etherscan.io/" target="_blank" rel="noopener noreferrer"><span class="network-dot" aria-hidden="true"></span>Sepolia<span class="desktop-only"> testnet</span><span aria-hidden="true"> ↗</span></a>
+  </header>
+
+  <main id="dashboard" class="shell" tabindex="-1">
+    <div class="page-heading">
+      <div><h1>Squeekchain overview</h1><p class="muted">Hamster-powered proof of work. Live from the wheel.</p></div>
+      <div class="refresh-controls">
+        <button id="pause-button" class="button secondary" type="button" aria-pressed="false" aria-label="Pause automatic updates"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path id="pause-icon" d="M5 3v10M11 3v10"/></svg><span id="pause-label">Pause</span></button>
+        <button id="refresh-button" class="button primary" type="button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 6a5 5 0 1 0 .1 4M13 2v4H9" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="refresh-label">Refresh now</span></button>
+        <span id="poll-note" class="poll-note muted">Updates every 15 seconds</span>
+      </div>
+    </div>
+    <p id="connection-note" class="connection-note" hidden></p>
+    <noscript><p class="connection-note">Enable JavaScript to read the live APIs and verify SQK supply. This dashboard has no server or account requirement.</p></noscript>
+
+    <div class="dashboard-grid">
+      <section class="panel wheel-panel" aria-labelledby="wheel-heading">
+        <div class="panel-heading"><h2 id="wheel-heading">Wheel telemetry</h2><span id="wheel-freshness" class="badge neutral">Connecting</span></div>
+        <div class="wheel-main">
+          <div class="wheel-state"><p id="hamster-state" class="state-value">WAITING</p><p id="wheel-description" class="muted">Listening for the wheel.</p><p id="provenance" class="sensor-label"><span class="sensor-dot" aria-hidden="true"></span>Sensor not yet received</p></div>
+          <svg class="wheel-art" viewBox="0 0 250 230" fill="none" aria-hidden="true">
+            <path d="M92 207h88M113 193l-7 14m48-14 7 14" class="art-outline" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="131" cy="108" r="88" class="art-wheel" stroke-width="6"/>
+            <circle cx="131" cy="108" r="76" class="art-spokes" stroke-width="1.5"/>
+            <path d="M131 32v152M55 108h152M77 54l108 108M77 162 185 54" class="art-spokes" stroke-width="1.5"/>
+            <path d="M59 160c-13-1-18-10-15-18" class="art-outline" stroke-width="3" stroke-linecap="round"/>
+            <path d="M66 163c-13-19-6-45 16-54 12-6 26-3 38 6l18-1c11 0 21 8 23 17l7 4c3 3 2 7-2 9l-12 7c-3 15-15 23-34 23H86c-10 0-16-4-20-11Z" class="art-hamster" stroke-width="2.5"/>
+            <path d="M114 116c-7-5-9-15-3-20 6-5 16 0 16 9l-1 11" class="art-hamster" stroke-width="2.5"/>
+            <path d="M115 109c-1-4 0-6 3-6" class="art-ear" stroke-width="3" stroke-linecap="round"/>
+            <path d="M75 160c-3-11 1-24 11-29 11-5 24 2 24 15 0 7-2 12-5 16" class="art-belly" stroke-width="2"/>
+            <path d="m92 174-2 5h14m29-9 1 5h13" class="art-outline" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="143" cy="128" r="3" class="art-eye"/>
+            <path d="m163 138 8-1m-15 8 12 3" class="art-outline" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="137" cy="139" r="5" class="art-cheek"/>
+            <path d="m28 72 6 2m0-22 5 4m164 118 6 3m-5-23 7 1" class="art-wheel" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <dl class="wheel-metrics">
+          <div><dt>Wheel cadence</dt><dd><span id="rpm" class="metric-value">—</span><span class="unit">rpm</span></dd></div>
+          <div><dt>Wheel speed</dt><dd><span id="speed" class="metric-value">—</span><span class="unit">mm/s</span></dd></div>
+          <div><dt>Distance travelled</dt><dd><span id="distance" class="metric-value">—</span><span id="distance-unit" class="unit">m</span></dd></div>
+        </dl>
+        <p id="status-stamp" class="source-stamp">No wheel reading yet. Retrying every 15 seconds.</p>
+      </section>
+
+      <section class="panel chain-panel" aria-labelledby="chain-heading">
+        <div class="panel-heading"><h2 id="chain-heading">Chain progress</h2><span id="core-freshness" class="badge neutral">Connecting</span></div>
+        <p class="value-label">Squeekchain block height</p>
+        <p id="block-height" class="block-value">—</p>
+        <div class="progress-label"><span id="next-block">Progress to next block</span><strong id="block-percent">—</strong></div>
+        <progress id="block-progress" max="100" value="0" aria-label="Progress to next Squeekchain block" aria-describedby="progress-note"></progress>
+        <p id="progress-note" class="small muted">Waiting for confirmed chain progress.</p>
+        <dl class="chain-facts">
+          <div><dt>Settled through round</dt><dd id="settled-round">—</dd></div>
+          <div><dt>Work per 1,000 blocks</dt><dd id="work-rate">—</dd></div>
+          <div><dt>Settlement queue</dt><dd id="settlement-state">—</dd></div>
+        </dl>
+        <p id="core-stamp" class="source-stamp">No chain reading yet. Retrying every 15 seconds.</p>
+        <p id="settlement-stamp" class="source-stamp" hidden></p>
+      </section>
+
+      <section class="panel work-panel" aria-labelledby="work-heading">
+        <div class="panel-heading"><h2 id="work-heading">Cumulative work</h2><span class="small muted">This session</span></div>
+        <div class="work-summary"><p><strong id="cumulative-work" class="large-value">—</strong><span class="unit">work units</span></p><span id="work-gain" class="badge neutral">Awaiting first sample</span></div>
+        <figure class="work-figure">
+          <svg id="work-chart" viewBox="0 0 600 130" preserveAspectRatio="none" role="img" aria-labelledby="chart-title chart-description"><title id="chart-title">Cumulative Squeekchain work this session</title><desc id="chart-description">No samples yet.</desc><path class="chart-grid" d="M0 15H600M0 65H600M0 115H600"/><path id="chart-area" class="chart-area" d=""/><path id="chart-line" class="chart-line" d=""/><circle id="chart-dot" class="chart-dot" cx="6" cy="65" r="4" hidden/></svg>
+          <figcaption><span id="chart-start">Session starts with a live reading</span><span id="chart-end"></span></figcaption>
+        </figure>
+        <p id="chart-note" class="small muted">The chart builds as readings arrive. No simulated history.</p>
+        <p id="work-stamp" class="source-stamp">Waiting for a chain reading.</p>
+      </section>
+
+      <section class="panel supply-panel" aria-labelledby="supply-heading">
+        <div class="panel-heading"><h2 id="supply-heading">SQK supply</h2><span id="supply-badge" class="badge neutral">Unverified</span></div>
+        <p class="value-label">Published live supply</p>
+        <p class="supply-number"><strong id="published-supply" class="large-value">—</strong><span class="unit">SQK</span></p>
+        <dl class="supply-facts">
+          <div><dt>On-chain totalSupply()</dt><dd><span id="chain-supply">—</span> <span class="muted">SQK</span></dd></div>
+          <div><dt>Supply cap</dt><dd><span id="supply-cap">—</span> <span class="muted">SQK</span></dd></div>
+        </dl>
+        <p id="supply-comparison" class="comparison-note">Checking the API against the SQK contract on Sepolia.</p>
+        <details id="supply-details" class="supply-details"><summary>View exact comparison</summary><dl class="exact-facts"><div><dt>Published supply (base units)</dt><dd id="published-exact">Not received</dd></div><div><dt>On-chain supply (base units)</dt><dd id="chain-exact">Not received</dd></div><div><dt>Token decimals</dt><dd id="token-decimals">Not received</dd></div><div><dt>Sepolia block checked</dt><dd id="rpc-block">Not received</dd></div></dl><a class="contract-link" href="https://sepolia.etherscan.io/token/0x5501e1fa81be1c3f49225fa7668da0245d07db60" target="_blank" rel="noopener noreferrer">SQK contract ↗<span class="contract-address">0x5501e1fa81be1c3f49225fa7668da0245d07db60</span></a></details>
+        <p id="economy-stamp" class="source-stamp">No economy reading yet.</p><p id="rpc-stamp" class="source-stamp">No on-chain reading yet.</p>
+      </section>
+
+      <section class="economy-strip" aria-labelledby="economy-heading">
+        <h2 id="economy-heading" class="sr-only">Mining and staking</h2>
+        <dl class="economy-metrics">
+          <div><dt><span class="stat-symbol" aria-hidden="true">↗</span>Mining issued</dt><dd><span id="mining-issued">—</span> <span class="unit">SQK</span></dd><dd id="mining-round" class="metric-caption small muted">Processed round not received</dd></div>
+          <div><dt><span class="stat-symbol" aria-hidden="true">◈</span>Total staked</dt><dd><span id="total-staked">—</span> <span class="unit">SQK</span></dd><dd id="staking-state" class="metric-caption small muted">Staking state not received</dd></div>
+          <div><dt><span class="stat-symbol" aria-hidden="true">↳</span>Staking rewards paid</dt><dd><span id="staking-paid">—</span> <span class="unit">SQK</span></dd><dd id="economy-status" class="metric-caption small muted">Economy data not received</dd></div>
+        </dl>
+      </section>
+
+      <section class="panel events-panel" aria-labelledby="events-heading">
+        <div class="panel-heading events-heading"><div><h2 id="events-heading">Recent core events</h2><p class="small muted">Confirmed on Sepolia · newest first · UTC</p></div><span id="event-count" class="small muted">Waiting for events</span></div>
+        <div class="table-wrap"><table><caption class="sr-only">Recent Squeekchain core events with round, UTC timestamp and Sepolia transaction links</caption><thead><tr><th scope="col">Event</th><th scope="col">Round</th><th scope="col" class="event-time-column">Time (UTC)</th><th scope="col">Transaction</th></tr></thead><tbody id="event-rows"><tr><td colspan="4" class="empty-state">Connecting to the core API. New readings arrive every 15 seconds.</td></tr></tbody></table></div>
+        <div class="events-bottom"><p id="events-stamp" class="source-stamp">No event reading yet.</p><button id="events-toggle" class="button secondary" type="button" aria-expanded="false" aria-controls="event-rows" hidden>Show all events</button></div>
+      </section>
+    </div>
+
+    <details class="data-sources" id="data-sources"><summary>Data sources &amp; freshness</summary><div class="sources-content"><p>Public readings refresh every 15 seconds. Successful readings are saved in this browser; failed requests keep the last known value with its timestamp. Pause stops automatic requests. Refresh now always checks all sources.</p><ul><li><a href="https://api.squeekchain.com/v1/status" target="_blank" rel="noopener noreferrer">Wheel telemetry &amp; settlement ↗</a><span id="source-status">Awaiting response</span></li><li><a href="https://api.squeekchain.com/v1/core" target="_blank" rel="noopener noreferrer">Chain state &amp; core events ↗</a><span id="source-core">Awaiting response</span></li><li><a href="https://api.squeekchain.com/v1/economy/state" target="_blank" rel="noopener noreferrer">Token, mining &amp; staking ↗</a><span id="source-economy">Awaiting response</span></li><li><a href="https://ethereum-sepolia-rpc.publicnode.com" target="_blank" rel="noopener noreferrer">Sepolia public JSON-RPC ↗</a><span id="source-rpc">Awaiting response</span></li></ul><p>Work is confirmed Squeekchain work; the chart records only this tab’s live samples (up to one hour). Supply is compared exactly in base units at the latest Sepolia block. The published index can lag the chain. SQK is on a test network.</p><p id="storage-note">Only public readings are stored locally. No tracking, accounts or wallet connection.</p></div></details>
+  </main>
+  <footer class="site-footer shell"><span>Small paws. Real work.</span><span>Independent Squeekchain dashboard <span aria-hidden="true">·</span> <a href="#data-sources" id="sources-link">View data sources</a></span></footer>
+  <p id="announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+</body>
+</html>
